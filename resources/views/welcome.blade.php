@@ -10,22 +10,42 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <section class="bg-[#003580] text-white pt-16 pb-24 px-6">
+        <section class="bg-[#003580] text-white pt-12 pb-24 px-6">
             <div class="max-w-6xl mx-auto">
-                <h1 class="text-5xl font-bold mb-4">Unlock Flights savings with members-only deals</h1>
-                <p class="text-xl mb-8">Save more on flights marked with the Genius label.</p>
-                <button class="bg-[#0071c2] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-sm transition">
-                    Sign in or register
-                </button>
+                <div class="mb-8">
+                    <img src="{{ asset('images/logo-removebg-preview.png') }}" 
+                        alt="La Roca Veranda Logo" 
+                        class="h-16 md:h-24 w-auto object-contain">
+                </div>
+
+                <h1 class="text-5xl font-bold mb-4 leading-tight">
+                    Elevating Every Moment of Your Journey.
+                </h1>
+                
+                <p class="text-xl mb-8 max-w-3xl opacity-90">
+                    "Welcome to La Roca Veranda Suites and Restaurant, where our commitment to seamless service ensures your stay is as effortless as it is memorable. We are delighted to have you with us and look forward to providing you with an exceptional experience defined by true hospitality."
+                </p>
+
+                <div class="flex gap-4">
+                    <a href="{{ route('login') }}">
+                        <button class="bg-[#0071c2] hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-sm transition shadow-md">
+                            Sign in or register
+                        </button>    
+                    </a>
+                    <button class="border border-white hover:bg-white hover:text-[#003580] text-white font-semibold py-3 px-8 rounded-sm transition">
+                        Book a Room
+                    </button>
+                </div>
             </div>
         </section>
-
         <div class="max-w-6xl mx-auto px-6 -mt-8">
-            <form class="bg-[#ffb700] p-1 rounded-lg shadow-lg flex flex-col md:flex-row gap-1">
+            <form class="p-1 rounded-lg shadow-lg flex flex-col md:flex-row gap-1">
                 <div class="flex-1 bg-white flex items-center px-4 py-3 rounded-l-md md:rounded-l-sm">
                     <span class="text-gray-400 mr-3">🛏️</span>
                     <input type="text" placeholder="Where are you going?" class="w-full outline-none text-gray-800">
