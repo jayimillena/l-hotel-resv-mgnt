@@ -3,7 +3,7 @@
         <div class="max-w-4xl w-full bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
             
             <div class="md:w-5/12 bg-[#003580] text-white p-10 flex flex-col justify-center">
-                <img src="{{ asset('images/logo-removebg-preview.png') }}" alt="Logo" class="h-16 w-auto mb-6 self-start">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mb-6 self-start">
                 <h2 class="text-3xl font-bold mb-4">Experience True Hospitality.</h2>
                 <p class="text-blue-100 opacity-90 leading-relaxed">
                     Join our community to unlock member-only deals and manage your reservations with ease at La Roca Veranda.
@@ -19,7 +19,7 @@
                     <p class="text-gray-500 text-sm mt-1">Please enter your details to continue.</p>
                 </div>
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                <form method="POST" action="{{ route('login') }}" class="space-y-5">
                     @csrf
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
@@ -36,11 +36,11 @@
                             class="w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-[#0071c2] focus:border-[#0071c2] outline-none transition">
                     </div>
 
-                    <button type="submit" class="w-full bg-[#0071c2] hover:bg-blue-700 text-white font-bold py-3 rounded-md shadow-md transition-all transform active:scale-[0.98]">
-                        Continue
-                    </button>
+                      <input type="hidden" name="user_type" required value="user" />
 
-                    <data name="user_type" value="user"></data>
+                    <button type="submit" class="w-full bg-[#0071c2] hover:bg-blue-700 text-white font-bold py-3 rounded-md shadow-md transition-all transform active:scale-[0.98]">
+                        Sign In
+                    </button>
 
                     <div class="relative flex py-4 items-center">
                         <div class="flex-grow border-t border-gray-200"></div>

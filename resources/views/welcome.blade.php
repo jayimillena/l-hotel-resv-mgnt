@@ -19,7 +19,7 @@
         <section class="bg-[#003580] text-white pt-12 pb-24 px-6">
             <div class="max-w-6xl mx-auto">
                 <div class="mb-8">
-                    <img src="{{ asset('images/logo-removebg-preview.png') }}" 
+                    <img src="{{ asset('images/logo.png') }}" 
                         alt="La Roca Veranda Logo" 
                         class="h-16 md:h-24 w-auto object-contain">
                 </div>

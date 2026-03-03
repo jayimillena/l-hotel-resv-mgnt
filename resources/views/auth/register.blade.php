@@ -3,7 +3,7 @@
         <div class="max-w-4xl w-full bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
             
             <div class="md:w-5/12 bg-[#003580] text-white p-10 flex flex-col justify-center">
-                <img src="{{ asset('images/logo-removebg-preview.png') }}" alt="Logo" class="h-16 w-auto mb-6 self-start">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mb-6 self-start">
                 <h2 class="text-3xl font-bold mb-4">Start Your Journey With Us.</h2>
                 <p class="text-blue-100 opacity-90 leading-relaxed">
                     Create an account to enjoy seamless bookings, personalized travel recommendations, and exclusive member rewards.
@@ -19,7 +19,7 @@
                     <p class="text-gray-500 text-sm mt-1">Join La Roca Veranda today.</p>
                 </div>
 
-                <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                <form method="POST" action="{{ route('register') }}" class="space-y-4">
                     @csrf
 
                     <div>
@@ -47,6 +47,8 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Confirm Password</label>
                             <input type="password" name="password_confirmation" placeholder="••••••••" required
                                 class="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-[#0071c2] focus:border-[#0071c2] outline-none transition">
+
+                            <input type="hidden" name="user_type" required value="user" />
                         </div>
                     </div>
                     @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
