@@ -36,7 +36,7 @@
                             class="w-full px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-[#0071c2] focus:border-[#0071c2] outline-none transition">
                     </div>
 
-                      <input type="hidden" name="user_type" required value="user" />
+                    <input type="hidden" name="user_type" required value="user" />
 
                     <button type="submit" class="w-full bg-[#0071c2] hover:bg-blue-700 text-white font-bold py-3 rounded-md shadow-md transition-all transform active:scale-[0.98]">
                         Sign In
