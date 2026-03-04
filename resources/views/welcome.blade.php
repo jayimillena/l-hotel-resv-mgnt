@@ -9,11 +9,14 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </head>
     <body>
         <section class="bg-[#003580] text-white pt-12 pb-24 px-6">
@@ -46,14 +49,50 @@
         </section>
         <div class="max-w-6xl mx-auto px-6 -mt-8">
             <form class="p-1 rounded-lg shadow-lg flex flex-col md:flex-row gap-1">
-                <div class="flex-1 bg-white flex items-center px-4 py-3 rounded-l-md md:rounded-l-sm">
-                    <span class="text-gray-400 mr-3">🛏️</span>
-                    <input type="text" placeholder="Where are you going?" class="w-full outline-none text-gray-800">
-                </div>
+                <div class="flex-1 bg-white flex items-center px-4 py-3 relative cursor-pointer" 
+                    x-data="datePicker()" 
+                    @click.outside="open = false">
+                    
+                    <div class="flex items-center w-full" @click="open = !open">
+                        <span class="text-gray-400 mr-3">📅</span>
+                        <span class="text-gray-800" x-text="displayDate || 'Check-in date — Check-out date'"></span>
+                    </div>
 
-                <div class="flex-1 bg-white flex items-center px-4 py-3">
-                    <span class="text-gray-400 mr-3">📅</span>
-                    <input type="text" placeholder="Check-in date — Check-out date" class="w-full outline-none text-gray-800">
+                    <div x-show="open" 
+                        x-transition 
+                        class="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 p-4 w-[320px] md:w-[550px] z-[100] text-gray-900">
+                        
+                        <div class="flex border-b border-gray-100 mb-4">
+                            <button type="button" @click="setMode('overnight')" 
+                                :class="mode === 'overnight' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'"
+                                class="flex-1 py-2 font-semibold text-sm transition">Overnight</button>
+                            
+                            <button type="button" @click="setMode('day_use')" 
+                                :class="mode === 'day_use' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'"
+                                class="flex-1 py-2 font-semibold text-sm transition">Day Use</button>
+                            
+                            <button type="button" @click="setMode('flexible')" 
+                                :class="mode === 'flexible' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'"
+                                class="flex-1 py-2 font-semibold text-sm transition">I'm Flexible</button>
+                        </div>
+
+                        <div x-show="mode !== 'flexible'" class="min-h-[300px]">
+                            <div id="inline-calendar"></div>
+                        </div>
+
+                        <div x-show="mode === 'flexible'" class="py-6 px-2 text-center">
+                            <p class="text-sm text-gray-500 mb-4">How long would you like to stay?</p>
+                            <div class="grid grid-cols-3 gap-3">
+                                <template x-for="option in ['3 Nights', '1 Week', '1 Month']">
+                                    <button type="button" 
+                                        @click="selectFlexible(option)"
+                                        class="border rounded-md py-3 text-sm font-medium hover:border-blue-500 hover:bg-blue-50 transition">
+                                        <span x-text="option"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex-1 bg-white flex items-center px-4 py-3">
@@ -96,5 +135,54 @@
                 <label for="flights" class="text-gray-700">Add flights</label>
             </div>
         </div>
+        <script>
+            function datePicker() {
+                return {
+                    open: false,
+                    mode: 'overnight', // overnight, day_use, flexible
+                    displayDate: '',
+                    fp: null,
+
+                    init() {
+                        this.$nextTick(() => this.initFlatpickr());
+                    },
+
+                    initFlatpickr() {
+                        if (this.fp) this.fp.destroy();
+
+                        const config = {
+                            inline: true,
+                            minDate: "today",
+                            mode: this.mode === 'overnight' ? "range" : "single",
+                            showMonths: window.innerWidth > 768 ? 2 : 1,
+                            onChange: (selectedDates) => {
+                                if (this.mode === 'overnight' && selectedDates.length === 2) {
+                                    this.displayDate = `${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`;
+                                    this.open = false;
+                                } else if (this.mode === 'day_use' && selectedDates.length === 1) {
+                                    this.displayDate = `Day Use: ${selectedDates[0].toLocaleDateString()}`;
+                                    this.open = false;
+                                }
+                            }
+                        };
+                        
+                        // Only init if not in flexible mode
+                        if(this.mode !== 'flexible') {
+                            this.fp = flatpickr("#inline-calendar", config);
+                        }
+                    },
+
+                    setMode(newMode) {
+                        this.mode = newMode;
+                        this.$nextTick(() => this.initFlatpickr());
+                    },
+
+                    selectFlexible(option) {
+                        this.displayDate = `Flexible: ${option}`;
+                        this.open = false;
+                    }
+                }
+            }
+        </script>
     </body>
 </html>
