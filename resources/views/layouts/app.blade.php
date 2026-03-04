@@ -13,6 +13,13 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
     </head>
     <body>
         @include('layouts.navigation')
@@ -29,5 +36,22 @@
         <main>
             {{ $slot }}
         </main>
+
+        <script>
+            document.getElementById('addRoomForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+
+                axios.post("{{ route('rooms.store') }}", formData)
+                    .then(response => {
+                        // Success: Reload page to show new room
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        //
+                    });
+            });
+        </script>
     </body>
 </html>

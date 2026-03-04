@@ -95,11 +95,79 @@
                     </div>
                 </div>
 
-                <div class="flex-1 bg-white flex items-center px-4 py-3">
-                    <span class="text-gray-400 mr-3">👤</span>
-                    <select class="w-full outline-none text-gray-800 bg-transparent">
-                        <option>2 adults · 0 children · 1 room</option>
-                    </select>
+                <div class="flex-1 bg-white flex items-center px-4 py-3 relative cursor-pointer group" 
+                    x-data="occupancySelector()" 
+                    @click.outside="open = false">
+                    
+                    <div class="flex items-center w-full" @click="open = !open">
+                        <span class="text-gray-400 mr-3 text-xl">👤</span>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Guests & Rooms</span>
+                            <div class="flex items-center gap-1">
+                                <span class="text-gray-800 font-bold text-sm" x-text="`${adults} adults`"></span>
+                                <span class="text-gray-400 text-xs">•</span>
+                                <span class="text-gray-800 font-bold text-sm" x-text="`${rooms} room` + (rooms > 1 ? 's' : '')"></span>
+                            </div>
+                        </div>
+                        <span class="ml-auto text-gray-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">▼</span>
+                    </div>
+
+                    <div x-show="open" 
+                        x-cloak
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        class="absolute top-full right-0 mt-4 bg-white rounded-lg shadow-2xl border border-gray-100 p-6 w-80 z-[120] text-gray-900">
+                        
+                        <div class="absolute -top-2 right-10 w-4 h-4 bg-white border-t border-l border-gray-100 rotate-45"></div>
+
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex flex-col">
+                                <p class="font-bold text-sm">Room</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button type="button" @click="decrement('rooms')" :disabled="rooms <= 1" :class="rooms <= 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-blue-50'" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center transition">
+                                    <span class="mb-1 text-xl">−</span>
+                                </button>
+                                <span x-text="rooms" class="w-4 text-center font-bold text-base text-gray-800"></span>
+                                <button type="button" @click="increment('rooms')" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
+                                    <span class="mb-0.5 text-xl">+</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex flex-col">
+                                <p class="font-bold text-sm">Adults</p>
+                                <p class="text-[10px] text-gray-400">Ages 18 or above</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button type="button" @click="decrement('adults')" :disabled="adults <= 1" :class="adults <= 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-blue-50'" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center transition">
+                                    <span class="mb-1 text-xl">−</span>
+                                </button>
+                                <span x-text="adults" class="w-4 text-center font-bold text-base text-gray-800"></span>
+                                <button type="button" @click="increment('adults')" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
+                                    <span class="mb-0.5 text-xl">+</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <p class="font-bold text-sm">Children</p>
+                                <p class="text-[10px] text-gray-400">Ages 0-17</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button type="button" @click="decrement('children')" :disabled="children <= 0" :class="children <= 0 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-blue-50'" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center transition">
+                                    <span class="mb-1 text-xl">−</span>
+                                </button>
+                                <span x-text="children" class="w-4 text-center font-bold text-base text-gray-800"></span>
+                                <button type="button" @click="increment('children')" class="w-8 h-8 border-2 border-blue-500 rounded-full text-blue-500 flex items-center justify-center hover:bg-blue-50 transition">
+                                    <span class="mb-0.5 text-xl">+</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="bg-[#0071c2] text-white px-8 py-3 rounded-r-md md:rounded-r-sm font-bold text-xl hover:bg-blue-700">
@@ -180,6 +248,23 @@
                     selectFlexible(option) {
                         this.displayDate = `Flexible: ${option}`;
                         this.open = false;
+                    }
+                }
+            }
+
+            function occupancySelector() {
+                return {
+                    open: false,
+                    rooms: 1, // Default from source
+                    adults: 2, // Default from source
+                    children: 0, // Default from source
+
+                    increment(type) {
+                        if (this[type] < 10) this[type]++;
+                    },
+                    decrement(type) {
+                        const min = (type === 'children' ? 0 : 1);
+                        if (this[type] > min) this[type]--;
                     }
                 }
             }
