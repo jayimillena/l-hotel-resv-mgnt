@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         $names = [
             'Veranda Rooms', 'Standard Rooms', 'Junior Suite',
-            'Single Room', 'Triple Occupancy'
+            'Single Room', 'Triple Occupancy', 'Coco Melon'
         ];
 
         $rooms = array_map(function ($name) {
