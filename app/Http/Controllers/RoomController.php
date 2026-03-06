@@ -23,7 +23,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        //
     }
 
     /**
@@ -33,7 +33,7 @@ class RoomController extends Controller
     {
         Room::create($request->validated());
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Room created successfully!');
     }
 
     /**

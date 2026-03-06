@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use App\Http\Requests\StaffRequest;
 
 class StaffController extends Controller
 {
@@ -12,7 +13,9 @@ class StaffController extends Controller
      */
     public function index()
     {
-        //
+        $totalStaffs = Staff::count();
+        $staffs = Staff::paginate(7);
+        return view('staffs.index', compact('staffs', 'totalStaffs'));
     }
 
     /**
@@ -26,9 +29,11 @@ class StaffController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StaffRequest $request)
     {
-        //
+        Staff::create($request->validated());
+
+        return redirect()->back()->with('success', 'Staff created successfully!');
     }
 
     /**

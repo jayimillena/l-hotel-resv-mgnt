@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('/staffs', App\Http\Controllers\RoomController::class)->only(['index']);
+    Route::resource('/staffs', App\Http\Controllers\StaffController::class)->only(['index', 'store']);
     Route::resource('/rooms', App\Http\Controllers\RoomController::class)->only(['index', 'store']);
 });
 

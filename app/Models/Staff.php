@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Staff extends Model
 {
-    //
+    protected $table = 'staffs';
+
+    protected $fillable = ['name', 'role'];
+
+    protected function guests()
+    {
+        return $this->hasMany(Guest::class);
+    }
 }

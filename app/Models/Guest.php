@@ -10,7 +10,7 @@ class Guest extends Model
 
     protected $fillable = ['name', 'birthdate', 'address', 'contact_no'];
     
-    protected function room()
+    protected function rooms()
     {
         return $this->hasMany(Room::class);
     }

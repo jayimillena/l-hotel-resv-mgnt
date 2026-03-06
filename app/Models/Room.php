@@ -14,4 +14,9 @@ class Room extends Model
     {
         return $this->belongsTo(Guest::class);
     }
+
+    protected function staffs()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }
