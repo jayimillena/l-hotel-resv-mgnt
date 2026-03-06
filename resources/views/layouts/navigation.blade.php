@@ -39,7 +39,11 @@
                         </x-dropdown-link>
 
                         <x-dropdown-link  :href="route('rooms.index')">
-                            {{ __('Room Bookings') }}
+                            {{ __('Rooms') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link  :href="route('staffs.index')">
+                            {{ __('Staffs') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

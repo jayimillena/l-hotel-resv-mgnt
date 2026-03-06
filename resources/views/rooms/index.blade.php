@@ -1,7 +1,14 @@
 <x-app-layout>
     <div x-data="{ open: false }" class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+
+                @if(session('success'))
+                    <div style="padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px;">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                 <div x-show="open" 
                      class="fixed inset-0 z-50 overflow-y-auto" 
@@ -11,7 +18,7 @@
                         <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" @click="open = false"></div>
 
                         <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                            <form id="addRoomForm" action="{{ route('rooms.store') }}" class="p-6">
+                            <form id="addRoomForm" method="POST" action="{{ route('rooms.store') }}" class="p-6">
                                 @csrf
                                 <h3 class="text-lg font-bold text-gray-900 mb-4">Add New Room</h3>
                                 
@@ -30,7 +37,7 @@
 
                                 <div class="mt-5 sm:mt-6 flex justify-end gap-3">
                                     <button type="button" @click="open = false" class="bg-white px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
-                                    <button type="submit" class="bg-blue-600 px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">Save Room</button>
+                                    <input type="submit" class="bg-blue-600 px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700" value="Save Room"/>
                                 </div>
                             </form>
                         </div>

@@ -16,9 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/rooms', [App\Http\Controllers\RoomController::class, 'index'])->name('rooms.index');
-    Route::get('/rooms/create', [App\Http\Controllers\RoomController::class, 'create'])->name('rooms.create');
-    Route::post('/rooms/store', [App\Http\Controllers\RoomController::class, 'store'])->name('rooms.store');
+    Route::resource('/staffs', App\Http\Controllers\RoomController::class)->only(['index']);
+    Route::resource('/rooms', App\Http\Controllers\RoomController::class)->only(['index', 'store']);
 });
 
 require __DIR__.'/auth.php';

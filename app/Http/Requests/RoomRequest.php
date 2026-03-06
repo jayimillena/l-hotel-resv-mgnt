@@ -11,7 +11,7 @@ class RoomRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,11 +19,18 @@ class RoomRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'availability' => $this->has('availability'), 
+        ]);
+    }
     public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'availability' => ['required', 'boolean'],
+            'availability' => ['boolean'],
         ];
     }
 }
