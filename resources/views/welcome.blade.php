@@ -53,7 +53,7 @@
                     x-data="datePicker()" 
                     @click.outside="open = false">
                     
-                    <div class="flex items-center w-full" @click="open = !open">
+                    <div class="flex items-center w-full" @click="open = !open; if(open) setMode('overnight')"> 
                         <span class="text-gray-400 mr-3">📅</span>
                         <span class="text-gray-800" x-text="displayDate || 'Check-in date — Check-out date'"></span>
                     </div>
@@ -107,6 +107,8 @@
                                 <span class="text-gray-800 font-bold text-sm" x-text="`${adults} adults`"></span>
                                 <span class="text-gray-400 text-xs">•</span>
                                 <span class="text-gray-800 font-bold text-sm" x-text="`${rooms} room` + (rooms > 1 ? 's' : '')"></span>
+                                <span class="text-gray-400 text-xs">•</span>
+                                <span class="text-gray-800 font-bold text-sm" x-text="`${children} children` + (children > 1 ? 's' : '')"></span>
                             </div>
                         </div>
                         <span class="ml-auto text-gray-400 transition-transform duration-200" :class="open ? 'rotate-180' : ''">▼</span>
